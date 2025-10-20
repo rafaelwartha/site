@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>rafaelwartha | Gameplays</title>
+  <link rel="icon" href="image/foto-perfil.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS externo -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <main class="wrap" role="main">
+    <!-- Perfil -->
+    <section class="profile" aria-label="Perfil">
+      <img src="image/foto-perfil.png" alt="Foto de perfil de Rafael Wartha">
+      <h1>rafaelwartha</h1>
+      <p class="bio">Gameplays em lives</p>
+    </section>
+
+    <!-- Links -->
+    <nav class="links" aria-label="Links principais">
+      <button class="btn" id="openPix" type="button" aria-haspopup="dialog">
+        <span class="dot">💠</span><span>Live PIX</span>
+      </button>
+
+      <a class="btn" href="https://www.tiktok.com/@rafaelwartha" target="_blank" rel="noopener">
+        <span class="dot">🎵</span><span>TikTok</span>
+      </a>
+
+      <a class="btn" href="https://discord.gg/" target="_blank" rel="noopener">
+        <span class="dot">💬</span><span>Discord</span>
+      </a>
+
+      <a class="btn" href="https://www.twitch.tv/rafaelwartha" target="_blank" rel="noopener">
+        <span class="dot">🟣</span><span>Roxinha - Twitch</span>
+      </a>
+
+      <a class="btn" href="https://kick.com/rafaelwartha" target="_blank" rel="noopener">
+        <span class="dot">💚</span><span>Kick</span>
+      </a>
+    </nav>
+
+    <p class="foot">© <span id="year"></span> rafaelwartha</p>
+  </main>
+
+  <!-- Modal PIX -->
+  <div class="modal" id="pixModal" role="dialog" aria-modal="true" aria-labelledby="pixTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="modal-title" id="pixTitle">Apoiar via PIX</div>
+        <button class="close" id="closePix" type="button" aria-label="Fechar">Fechar</button>
+      </div>
+
+      <!-- imagem do QR -->
+      <img src="image/pix.jpeg" alt="QR Code do PIX" class="pix-img">
+
+      <div class="pix-info">
+        ❌ Não consegue ler o QR Code?
+        <a href="https://livepix.gg/rafaelwartha" target="_blank" rel="noopener">
+          Vá direto para o site do LivePix.
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS externo -->
+  <script src="js/script.js"></script>
+</body>
+</html>
