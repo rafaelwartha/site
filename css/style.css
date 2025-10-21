@@ -1,89 +1,139 @@
 /* ---------- VARIÁVEIS DE TEMA ---------- */
-:root {
-  --accent: #00ffff;
-  --accent-weak: rgba(0,255,255,.6);
-  --txt: #fff;
-  --txt-dim: #cfd9e6;
-  --card-bg: rgba(0,0,0,.60);
-  --card-bg-hover: rgba(0,255,255,.14);
-  --shadow: 0 0 8px rgba(0,255,255,.25);
-  --font: 'Orbitron', sans-serif;
+:root{
+  --accent:#00ffff;
+  --accent-weak:rgba(0,255,255,.6);
+  --txt:#fff;
+  --txt-dim:#cfd9e6;
+  --card-bg:rgba(0,0,0,.60);
+  --card-bg-hover:rgba(0,255,255,.14);
+  --shadow:0 0 8px rgba(0,255,255,.25);
+  --font:'Orbitron',sans-serif;
 
-  /* controles dos botões */
-  --icon-size: 50px;          /* tamanho da logo */
-  --icon-col: 70px;           /* largura da coluna do ícone */
-  --btn-min-h: 78px;          /* altura mínima do botão */
+  /* controles dos botões (default desktop) */
+  --icon-size:50px;     /* tamanho da logo */
+  --icon-col:70px;      /* largura da coluna do ícone */
+  --btn-min-h:78px;     /* altura mínima do botão */
 }
 
 /* ---------- RESET ---------- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { height: 100%; }
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+html{ -webkit-text-size-adjust:100%; } /* iOS não “aumentar” fontes */
 
-/* ---------- FUNDO E CORPO ---------- */
-body {
-  font-family: var(--font);
-  background: url('../image/fundo.png') center/cover fixed no-repeat;
-  color: var(--txt);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
-  opacity: 0;
-  transition: opacity 1s ease;
+/* ---------- FUNDO E CORPO (MOBILE-FRIENDLY) ---------- */
+body{
+  font-family:var(--font);
+  background:url('../image/fundo.png') center/cover no-repeat;
+  /* iOS tem bug com background-attachment: fixed; evitamos em mobile (ver @supports abaixo) */
+  color:var(--txt);
+
+  /* Centralização responsiva real */
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+
+  /* viewport dinâmico + notch safe area */
+  min-height:100vh;
+  min-height:100svh;
+  min-height:100dvh;
+
+  /* dá respiro pro notch e barra inferior */
+  padding: clamp(16px, env(safe-area-inset-top) + 12px, 48px)
+           12px
+           clamp(16px, env(safe-area-inset-bottom) + 12px, 48px);
+
+  overflow-x:hidden;         /* evita scroll lateral */
+  opacity:0;
+  transition:opacity 1s ease;
 }
-body.loaded { opacity: 1; }
+body.loaded{opacity:1;}
 
 /* camada de contraste */
-body::before {
-  content: "";
-  position: fixed; inset: 0;
-  background: radial-gradient(60% 50% at 50% 35%, rgba(0,0,0,.25), rgba(0,0,0,.75) 70%), rgba(0,0,0,.45);
-  backdrop-filter: blur(3.5px);
-  pointer-events: none;
-  z-index: -1;
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background:
+    radial-gradient(60% 50% at 50% 35%, rgba(0,0,0,.25), rgba(0,0,0,.75) 70%),
+    rgba(0,0,0,.45);
+  backdrop-filter:blur(3.5px);
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* Desliga o background “fixo” especificamente nos navegadores iOS */
+@supports (-webkit-touch-callout:none) {
+  body { background-attachment: scroll; }
 }
 
 /* ---------- CONTAINER PRINCIPAL ---------- */
-.wrap {
-  width: min(92vw, 720px);
-  display: flex; flex-direction: column; align-items: center;
-  gap: 22px;
-  animation: rise .9s ease forwards;
-  transform: translateY(10px); opacity: .01;
+.wrap{
+  width:min(92vw,720px);
+  display:flex; flex-direction:column; align-items:center;
+  gap:22px;
+
+  /* animação de entrada */
+  animation:rise .9s ease forwards;
+  transform:translateY(10px);
+  opacity:.01;
+
+  /* garante centralização vertical perfeita */
+  margin-top:auto;
+  margin-bottom:auto;
+  padding-bottom:20px;
 }
-@keyframes rise { to { transform:none; opacity:1; } }
+@keyframes rise{to{transform:none;opacity:1;}}
 
 /* ---------- PERFIL ---------- */
 .profile img{
-  width:170px; height:170px; border-radius:50%;
-  border:3px solid var(--accent); box-shadow:0 0 25px var(--accent);
-  margin-bottom:10px;
+  width:clamp(140px,26vw,180px);
+  height:clamp(140px,26vw,180px);
+  border-radius:50%;
+  border:3px solid var(--accent);
+  box-shadow:0 0 28px var(--accent);
+  margin-bottom:12px;
 }
-h1{ font-size:clamp(1.8rem,2.8vw + 1rem,2.6rem); letter-spacing:.5px;
-  text-shadow:0 0 12px #000, 0 0 16px var(--accent); }
-.bio{ color:var(--txt-dim); font-size:1rem; text-shadow:0 2px 6px #000; margin-bottom:6px; }
+h1{
+  font-size:clamp(1.8rem, 2.8vw + 1rem, 2.6rem);
+  letter-spacing:.5px;
+  text-shadow:0 0 12px #000, 0 0 16px var(--accent);
+}
+.bio{
+  color:var(--txt-dim);
+  font-size:1rem;
+  text-shadow:0 2px 6px #000;
+  margin-bottom:6px;
+}
 
 /* ---------- LINKS ---------- */
-.links{ width:100%; display:flex; flex-direction:column; gap:18px; margin-top:10px; }
+.links{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  margin-top:10px;
+}
 
 /* Botão com 3 colunas: [ícone] [TEXTO CENTRO] [fantasma] */
 .btn{
   position:relative;
   display:grid;
-  grid-template-columns: var(--icon-col) 1fr var(--icon-col);
+  grid-template-columns:var(--icon-col) 1fr var(--icon-col);
   align-items:center;
   column-gap:16px;
+
   width:100%;
   min-height:var(--btn-min-h);
   padding:16px 22px;
+
   border-radius:14px;
   color:var(--txt);
   text-decoration:none;
   background:var(--card-bg);
   border:1px solid var(--accent-weak);
   box-shadow:var(--shadow);
-  transition: transform .15s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+  transition:transform .15s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
   backdrop-filter:blur(2px);
   cursor:pointer;
 }
@@ -91,13 +141,14 @@ h1{ font-size:clamp(1.8rem,2.8vw + 1rem,2.6rem); letter-spacing:.5px;
 /* espaçador fantasma para balancear o ícone do lado direito */
 .btn::after{
   content:"";
-  grid-column:3;  /* ocupa a última coluna */
+  grid-column:3;
   justify-self:center;
   width:var(--icon-size);
   height:var(--icon-size);
 }
 
-.btn:hover, .btn:focus-visible{
+.btn:hover,
+.btn:focus-visible{
   background:var(--card-bg-hover);
   border-color:var(--accent);
   box-shadow:0 0 26px var(--accent), inset 0 0 10px rgba(0,255,255,.25);
@@ -109,17 +160,19 @@ h1{ font-size:clamp(1.8rem,2.8vw + 1rem,2.6rem); letter-spacing:.5px;
 .icon{
   grid-column:1;
   justify-self:center;
-  width:var(--icon-size); height:var(--icon-size);
+  width:var(--icon-size);
+  height:var(--icon-size);
   object-fit:contain;
-  filter: drop-shadow(0 0 10px var(--accent));
-  transition: transform .25s ease, filter .3s ease;
+  filter:drop-shadow(0 0 10px var(--accent));
+  transition:transform .25s ease, filter .3s ease;
 }
 .btn:hover .icon{ transform:scale(1.12); filter:drop-shadow(0 0 16px var(--accent)); }
 
 /* TEXTO (sempre no meio) */
 .btn span{
   grid-column:2;
-  font-size:1.1rem; letter-spacing:.4px;
+  font-size:1.1rem;
+  letter-spacing:.4px;
   text-align:center;
 }
 .bio, h1, .btn span{ text-shadow:0 0 6px rgba(0,0,0,.8); }
@@ -132,14 +185,20 @@ h1{ font-size:clamp(1.8rem,2.8vw + 1rem,2.6rem); letter-spacing:.5px;
 .btn.kick:hover   { border-color:#53fc18; box-shadow:0 0 25px #53fc18, inset 0 0 10px rgba(83,252,24,.2); }
 
 /* ---------- MODAL PIX ---------- */
-.modal{ position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.65); backdrop-filter:blur(2px); padding:20px; z-index:10; }
+.modal{
+  position:fixed; inset:0; display:none; place-items:center;
+  background:rgba(0,0,0,.65); backdrop-filter:blur(2px);
+  padding:20px; z-index:10;
+}
 .modal.open{ display:grid; }
 .modal-card{
   width:min(96vw,380px);
   background:rgba(8,12,16,.9);
   border:1px solid var(--accent-weak);
-  border-radius:16px; box-shadow:0 0 24px var(--accent);
-  padding:14px 14px 18px; animation:pop .18s ease;
+  border-radius:16px;
+  box-shadow:0 0 24px var(--accent);
+  padding:14px 14px 18px;
+  animation:pop .18s ease;
 }
 @keyframes pop{ from{ transform:scale(.96); opacity:.6; } }
 .modal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
@@ -159,8 +218,30 @@ h1{ font-size:clamp(1.8rem,2.8vw + 1rem,2.6rem); letter-spacing:.5px;
 .foot{ margin-top:8px; font-size:.8rem; color:#9fb9c6; opacity:.8; text-shadow:0 1px 4px #000; }
 
 /* ---------- ACESSIBILIDADE ---------- */
-@media (prefers-reduced-motion: reduce){
-  .wrap{ animation:none; transform:none; opacity:1; }
-  body{ transition:none; }
-  .btn{ transition:none; }
+@media (prefers-reduced-motion:reduce){
+  .wrap{animation:none;transform:none;opacity:1;}
+  body{transition:none;}
+  .btn{transition:none;}
+}
+
+/* ---------- AJUSTES RESPONSIVOS ---------- */
+@media (max-width:480px){
+  :root{
+    --icon-size:44px;
+    --icon-col:62px;
+    --btn-min-h:72px;
+  }
+  .links{ gap:14px; }
+  .btn{ padding:14px 18px; }
+  .profile img{ width:150px; height:150px; }
+  h1{ font-size:clamp(1.6rem, 6vw, 2.2rem); }
+}
+
+@media (max-width:360px){
+  :root{
+    --icon-size:40px;
+    --icon-col:58px;
+    --btn-min-h:68px;
+  }
+  body{ padding-left:8px; padding-right:8px; }
 }
