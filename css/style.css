@@ -9,48 +9,44 @@
   --shadow:0 0 8px rgba(0,255,255,.25);
   --font:'Orbitron',sans-serif;
 
-  /* controles dos botões (default desktop) */
-  --icon-size:50px;     /* tamanho da logo */
-  --icon-col:70px;      /* largura da coluna do ícone */
-  --btn-min-h:78px;     /* altura mínima do botão */
+  /* desktop / default */
+  --icon-size:50px;
+  --icon-col:70px;
+  --btn-min-h:78px;
 }
 
 /* ---------- RESET ---------- */
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{height:100%;}
-html{ -webkit-text-size-adjust:100%; } /* iOS não “aumentar” fontes */
+html{ -webkit-text-size-adjust:100%; }
 
-/* ---------- FUNDO E CORPO (MOBILE-FRIENDLY) ---------- */
+/* ---------- FUNDO E CORPO ---------- */
 body{
   font-family:var(--font);
   background:url('../image/fundo.png') center/cover no-repeat;
-  /* iOS tem bug com background-attachment: fixed; evitamos em mobile (ver @supports abaixo) */
   color:var(--txt);
 
-  /* Centralização responsiva real */
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   text-align:center;
 
-  /* viewport dinâmico + notch safe area */
   min-height:100vh;
   min-height:100svh;
   min-height:100dvh;
 
-  /* dá respiro pro notch e barra inferior */
-  padding: clamp(16px, env(safe-area-inset-top) + 12px, 48px)
+  /* safe areas + respiro base */
+  padding: clamp(16px, env(safe-area-inset-top) + 14px, 56px)
            12px
            clamp(16px, env(safe-area-inset-bottom) + 12px, 48px);
 
-  overflow-x:hidden;         /* evita scroll lateral */
+  overflow-x:hidden;
   opacity:0;
   transition:opacity 1s ease;
 }
 body.loaded{opacity:1;}
 
-/* camada de contraste */
 body::before{
   content:"";
   position:fixed; inset:0;
@@ -62,30 +58,31 @@ body::before{
   z-index:-1;
 }
 
-/* Desliga o background “fixo” especificamente nos navegadores iOS */
 @supports (-webkit-touch-callout:none) {
   body { background-attachment: scroll; }
 }
 
-/* ---------- CONTAINER PRINCIPAL ---------- */
+/* ---------- CONTAINER ---------- */
 .wrap{
   width:min(92vw,720px);
   display:flex; flex-direction:column; align-items:center;
-  gap:22px;
-
-  /* animação de entrada */
+  gap:20px;
   animation:rise .9s ease forwards;
   transform:translateY(10px);
   opacity:.01;
-
-  /* garante centralização vertical perfeita */
   margin-top:auto;
   margin-bottom:auto;
   padding-bottom:20px;
 }
 @keyframes rise{to{transform:none;opacity:1;}}
 
+/* micro-spacer topo para telas pequenas (evita “beijar” o notch) */
+@media (max-width:414px){
+  .wrap::before{ content:""; display:block; height:12px; }
+}
+
 /* ---------- PERFIL ---------- */
+.profile{ margin-top:8px; }
 .profile img{
   width:clamp(140px,26vw,180px);
   height:clamp(140px,26vw,180px);
@@ -111,11 +108,10 @@ h1{
   width:100%;
   display:flex;
   flex-direction:column;
-  gap:18px;
-  margin-top:10px;
+  gap:16px;
+  margin-top:8px;
 }
 
-/* Botão com 3 colunas: [ícone] [TEXTO CENTRO] [fantasma] */
 .btn{
   position:relative;
   display:grid;
@@ -138,7 +134,7 @@ h1{
   cursor:pointer;
 }
 
-/* espaçador fantasma para balancear o ícone do lado direito */
+/* espaçador direito */
 .btn::after{
   content:"";
   grid-column:3;
@@ -156,7 +152,6 @@ h1{
   outline:none;
 }
 
-/* ÍCONE */
 .icon{
   grid-column:1;
   justify-self:center;
@@ -168,7 +163,6 @@ h1{
 }
 .btn:hover .icon{ transform:scale(1.12); filter:drop-shadow(0 0 16px var(--accent)); }
 
-/* TEXTO (sempre no meio) */
 .btn span{
   grid-column:2;
   font-size:1.1rem;
@@ -177,7 +171,7 @@ h1{
 }
 .bio, h1, .btn span{ text-shadow:0 0 6px rgba(0,0,0,.8); }
 
-/* ---------- HOVERS POR PLATAFORMA ---------- */
+/* hovers por plataforma */
 .btn.pix:hover    { border-color:#00ffff; box-shadow:0 0 25px #00ffff, inset 0 0 10px rgba(0,255,255,.2); }
 .btn.tiktok:hover { border-color:#fe2c55; box-shadow:0 0 25px #fe2c55, inset 0 0 10px rgba(254,44,85,.2); }
 .btn.discord:hover{ border-color:#5865f2; box-shadow:0 0 25px #5865f2, inset 0 0 10px rgba(88,101,242,.2); }
@@ -225,23 +219,55 @@ h1{
 }
 
 /* ---------- AJUSTES RESPONSIVOS ---------- */
+/* celulares médios/pequenos */
 @media (max-width:480px){
   :root{
-    --icon-size:44px;
-    --icon-col:62px;
-    --btn-min-h:72px;
+    --icon-size:42px;
+    --icon-col:60px;
+    --btn-min-h:70px;
   }
   .links{ gap:14px; }
   .btn{ padding:14px 18px; }
-  .profile img{ width:150px; height:150px; }
-  h1{ font-size:clamp(1.6rem, 6vw, 2.2rem); }
+  .profile img{ width:148px; height:148px; }
+  h1{ font-size:clamp(1.55rem, 5.2vw + .7rem, 2.15rem); }
 }
 
+/* foco em iPhone XR/XS Max (414px) e menores */
+@media (max-width:414px){
+  /* MAIS respiro superior (safe area + buffer) */
+  body{
+    padding-top: calc(env(safe-area-inset-top) + 52px);
+  }
+  :root{
+    --icon-size:38px;
+    --icon-col:56px;
+    --btn-min-h:64px;
+  }
+  .wrap{ gap:16px; }
+  .links{ gap:12px; }
+  .btn{ padding:12px 16px; }
+  .profile{ margin-top:14px; }             /* +folga */
+  .profile img{ width:126px; height:126px; } /* perfil um pouco menor */
+  h1{ font-size:clamp(1.38rem, 4.8vw + .6rem, 1.9rem); }
+  .btn span{ font-size:.98rem; }
+}
+
+/* telas muito estreitas (ex.: 360px) */
 @media (max-width:360px){
   :root{
-    --icon-size:40px;
-    --icon-col:58px;
-    --btn-min-h:68px;
+    --icon-size:36px;
+    --icon-col:52px;
+    --btn-min-h:60px;
   }
   body{ padding-left:8px; padding-right:8px; }
+  .profile img{ width:120px; height:120px; }
+  h1{ font-size:clamp(1.32rem, 5.2vw + .5rem, 1.8rem); }
+}
+
+/* pouca altura útil (teclado/URL bar abertas, landscape etc.) */
+@media (max-height:700px){
+  body{ padding-top: calc(env(safe-area-inset-top) + 44px); } /* +buffer */
+  .profile img{ width:120px; height:120px; }
+  :root{ --btn-min-h:60px; }
+  .btn span{ font-size:.96rem; }
 }
