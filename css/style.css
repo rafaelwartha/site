@@ -290,3 +290,31 @@ h1{
   margin-bottom: 10px;
 }
 
+/* Estilos do botão (exemplo) */
+.sorteio-actions {
+  padding: 16px 20px 20px;
+  display: flex;
+  justify-content: flex-end; /* ou center */
+}
+
+.btn-follow {
+  display: inline-block;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  background: #9146FF;        /* roxo Twitch */
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(145, 70, 255, 0.35);
+  transition: transform .06s ease, filter .2s ease, box-shadow .2s ease;
+}
+
+.btn-follow:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 10px 28px rgba(145, 70, 255, 0.45);
+}
+
+.btn-follow:active {
+  transform: translateY(0);
+}

@@ -20,34 +20,35 @@
 
     <!-- Links -->
     <nav class="links" aria-label="Links principais">
+      
+      <!-- Botão Regras do Sorteio -->
+      <button class="btn sorteio" id="openSorteio" type="button" aria-haspopup="dialog">
+        <img src="image/logo-trevo.png" alt="Ícone Sorteio" class="icon">
+        <span>REGRAS AQUI - Sorteio apenas na Twitch</span>
+      </button>
+      
+      <!-- Twitch -->
+      <a class="btn twitch" href="https://www.twitch.tv/rafaelwartha" target="_blank" rel="noopener">
+        <img src="image/logo-twitch.png" alt="Logo Twitch" class="icon">
+        <span>Roxinha - Twitch - LOCAL DO SORTEIO AQUI </span>
+      </a>
+
       <!-- Botão Live PIX -->
       <button class="btn pix" id="openPix" type="button" aria-haspopup="dialog">
         <img src="image/logo-pix.png" alt="Logo Live PIX" class="icon">
         <span>Live PIX</span>
       </button>
 
-      <!-- Botão Regras do Sorteio -->
-      <button class="btn sorteio" id="openSorteio" type="button" aria-haspopup="dialog">
-        <img src="image/logo-trevo.png" alt="Ícone Sorteio" class="icon">
-        <span>Regras do Sorteio apenas na Twitch</span>
-      </button>
-
       <!-- TikTok -->
-      <a class="btn tiktok" href="https://www.tiktok.com/@rafaelwartha" target="_blank" rel="noopener">
+      <a class="btn tiktok" href="https://www.tiktok.com/coin" target="_blank" rel="noopener">
         <img src="image/logo-tiktok.png" alt="Logo TikTok" class="icon">
-        <span>TikTok</span>
+        <span>Moedas Tikiok</span>
       </a>
 
       <!-- Discord -->
       <a class="btn discord" href="https://discord.gg/kbaMF5PqaU" target="_blank" rel="noopener">
         <img src="image/logo-discord.png" alt="Logo Discord" class="icon">
         <span>Discord</span>
-      </a>
-
-      <!-- Twitch -->
-      <a class="btn twitch" href="https://www.twitch.tv/rafaelwartha" target="_blank" rel="noopener">
-        <img src="image/logo-twitch.png" alt="Logo Twitch" class="icon">
-        <span>Roxinha - Twitch</span>
       </a>
 
       <!-- Kick -->
@@ -79,32 +80,46 @@
   </div>
 
   <!-- Modal Sorteio -->
-  <div class="modal" id="sorteioModal" role="dialog" aria-modal="true" aria-labelledby="sorteioTitle">
-    <div class="modal-card">
-      <div class="modal-head">
-        <div class="modal-title" id="sorteioTitle">🎉 Regras do Sorteio 🎉</div>
-        <button class="close" id="closeSorteio" type="button" aria-label="Fechar">Fechar</button>
-      </div>
+<div class="modal" id="sorteioModal" role="dialog" aria-modal="true" aria-labelledby="sorteioTitle">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="modal-title" id="sorteioTitle">🎉 Regras do Sorteio 🎉</div>
+      <button class="close" id="closeSorteio" type="button" aria-label="Fechar">Fechar</button>
+    </div>
 
-      <div class="sorteio-content">
-        <p>🎉 <strong>SORTEIO – 50 SEGUIDORES!</strong> 🎉</p>
+    <div class="sorteio-content">
+      <p>🎉 <strong>SORTEIO – 50 SEGUIDORES!</strong> 🎉</p>
 
-        <p><strong>💰 Prêmios:</strong><br>
-        • 1x R$50<br>
-        • 1x R$25<br>
-        • 1x R$25<br>
-        <em>(Total: R$100)</em></p>
+      <p><strong>💰 Prêmios:</strong><br>
+      • 1x R$50<br>
+      • 1x R$25<br>
+      • 1x R$25<br>
+      <em>(Total: R$100)</em></p>
 
-        <p><strong>📜 Regras:</strong><br>
-        1️⃣ Seguir o canal da Twitch<br>
-        2️⃣ Estar presente na live do sorteio<br>
-        3️⃣ Participar no chat (quanto mais ativo, melhor!)</p>
+      <p><strong>📜 Regras:</strong><br>
+      1️⃣ Seguir o canal da Twitch<br>
+      2️⃣ Estar presente na live do sorteio<br>
+      3️⃣ Participar no chat (quanto mais ativo, melhor!)</p>
 
-        <p><strong>📅 Sorteio AO VIVO</strong> assim que batermos 50 seguidores!<br>
-        🚀 Compartilha e vem participar!</p>
-      </div>
+      <p><strong>📅 Sorteio AO VIVO</strong> assim que batermos 50 seguidores!<br>
+      🚀 Compartilha e vem participar!</p>
+    </div>
+
+    <!-- Botão no final -->
+    <div class="sorteio-actions">
+      <a
+        href="https://twitch.tv/rafaelwartha"
+        target="_blank"
+        rel="noopener"
+        class="btn-follow"
+        aria-label="Abrir a Twitch em nova aba para seguir o canal"
+      >
+        👉 Clique aqui para seguir e participar
+      </a>
     </div>
   </div>
+</div>
+
 
   <script src="js/script.js"></script>
 </body>
