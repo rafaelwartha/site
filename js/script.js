@@ -5,24 +5,25 @@ window.addEventListener('load', () => {
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 });
 
-// modal PIX acessível
-const pixBtn   = document.getElementById('openPix');
-const pixModal = document.getElementById('pixModal');
-const closePix = document.getElementById('closePix');
-const mainWrap = document.querySelector('main.wrap');
+// ----------- MODAL BASE (FUNÇÃO REUTILIZÁVEL) -----------
+function criarModalSistema(btnAbrirId, modalId, btnFecharId, mainWrap) {
+  const botaoAbrir = document.getElementById(btnAbrirId);
+  const modal = document.getElementById(modalId);
+  const botaoFechar = document.getElementById(btnFecharId);
 
-if (pixBtn && pixModal && closePix) {
+  if (!(botaoAbrir && modal && botaoFechar)) return;
+
   let prevFocusedEl = null;
   let focusable = [];
   let firstEl = null;
-  let lastEl  = null;
+  let lastEl = null;
 
   function setFocusable() {
-    focusable = pixModal.querySelectorAll(
+    focusable = modal.querySelectorAll(
       'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
     );
-    firstEl = focusable[0] || closePix;
-    lastEl  = focusable[focusable.length - 1] || closePix;
+    firstEl = focusable[0] || botaoFechar;
+    lastEl = focusable[focusable.length - 1] || botaoFechar;
   }
 
   function onKeydownTrap(e) {
@@ -37,10 +38,16 @@ if (pixBtn && pixModal && closePix) {
     }
   }
 
+  function onEscClose(e) {
+    if (e.key === 'Escape' && modal.classList.contains('open')) {
+      closeModal();
+    }
+  }
+
   function openModal() {
     prevFocusedEl = document.activeElement;
-    pixModal.classList.add('open');
-    pixModal.setAttribute('aria-hidden', 'false');
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
 
     if (mainWrap && 'inert' in HTMLElement.prototype) {
       mainWrap.inert = true;
@@ -53,21 +60,15 @@ if (pixBtn && pixModal && closePix) {
     document.body.style.overflow = 'hidden';
 
     setFocusable();
-    closePix.focus();
+    botaoFechar.focus();
 
     document.addEventListener('keydown', onKeydownTrap);
     document.addEventListener('keydown', onEscClose);
   }
 
-  function onEscClose(e) {
-    if (e.key === 'Escape' && pixModal.classList.contains('open')) {
-      closeModal();
-    }
-  }
-
   function closeModal() {
-    pixModal.classList.remove('open');
-    pixModal.setAttribute('aria-hidden', 'true');
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
 
     if (mainWrap && 'inert' in HTMLElement.prototype) {
       mainWrap.inert = false;
@@ -82,12 +83,21 @@ if (pixBtn && pixModal && closePix) {
     document.removeEventListener('keydown', onKeydownTrap);
     document.removeEventListener('keydown', onEscClose);
 
-    (prevFocusedEl || pixBtn).focus();
+    (prevFocusedEl || botaoAbrir).focus();
   }
 
-  pixBtn.addEventListener('click', openModal);
-  closePix.addEventListener('click', closeModal);
-  pixModal.addEventListener('click', (e) => {
-    if (e.target === pixModal) closeModal();
+  botaoAbrir.addEventListener('click', openModal);
+  botaoFechar.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
   });
 }
+
+// ----------- CHAMADAS -----------
+const mainWrap = document.querySelector('main.wrap');
+
+// Modal PIX
+criarModalSistema('openPix', 'pixModal', 'closePix', mainWrap);
+
+// Modal Sorteio
+criarModalSistema('openSorteio', 'sorteioModal', 'closeSorteio', mainWrap);
