@@ -5,6 +5,34 @@ window.addEventListener('load', () => {
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 });
 
+// ----------- FUNÇÃO DE CONFETE -----------
+function explodirConfete() {
+  if (typeof confetti === "undefined") return;
+
+  // rajada central
+  confetti({
+    particleCount: 120,
+    spread: 70,
+    origin: { y: 0.6 }
+  });
+
+  // segunda rajada lateral colorida
+  setTimeout(() => {
+    confetti({
+      particleCount: 100,
+      spread: 100,
+      angle: 60,
+      origin: { x: 0 }
+    });
+    confetti({
+      particleCount: 100,
+      spread: 100,
+      angle: 120,
+      origin: { x: 1 }
+    });
+  }, 350);
+}
+
 // ----------- MODAL BASE (FUNÇÃO REUTILIZÁVEL) -----------
 function criarModalSistema(btnAbrirId, modalId, btnFecharId, mainWrap) {
   const botaoAbrir = document.getElementById(btnAbrirId);
@@ -48,6 +76,11 @@ function criarModalSistema(btnAbrirId, modalId, btnFecharId, mainWrap) {
     prevFocusedEl = document.activeElement;
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
+
+    // 🚀 dispara confete se for o modal do sorteio
+    if (modalId === 'sorteioModal') {
+      explodirConfete();
+    }
 
     if (mainWrap && 'inert' in HTMLElement.prototype) {
       mainWrap.inert = true;
