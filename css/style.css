@@ -255,3 +255,8 @@ h1{
 }
 .btn-follow:hover { transform: translateY(-1px); filter: brightness(1.05); box-shadow: 0 8px 22px rgba(145, 70, 255, 0.45); }
 .btn-follow:active { transform: translateY(0); }
+
+
+#openSorteio {
+  display: none !important;
+}
